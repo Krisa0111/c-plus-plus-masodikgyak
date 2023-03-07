@@ -1,20 +1,44 @@
-// masodikgyak.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
+#include <sstream>
+#include <iomanip>
 
-int main()
-{
-    std::cout << "Hello World!\n";
+using namespace std;
+
+double decimalToDouble(string decimal) {
+    // Check if the input string contains only whitespace, integer, and newline characters
+    if (decimal.find_first_not_of(" \t\r0123456789") != string::npos) {
+        return 0;
+    }
+
+    double result;
+    stringstream ss(decimal);
+    ss >> result;
+    return result;
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+void uintToHex(unsigned int num, char* hex) {
+    stringstream ss;
+    ss << hex << num;
+    string str = ss.str();
+    strcpy(hex, str.c_str());
+}
+
+
+int main() {
+    // decimal to double
+    string decimal = "3.14159";
+    double pi = decimalToDouble(decimal);
+    cout << "Decimal: " << decimal << endl;
+    cout << "Double: " << fixed << setprecision(5) << pi << endl;
+
+    // unsigned int to hexadecimal char array
+    unsigned int num = 3735928559;
+    char hex[9]; // pre-allocate a char array to store the hexadecimal representation
+    uintToHex(num, hex); // pass the unsigned int and the pre-allocated char array as parameters
+    cout << "Unsigned int: " << num << endl;
+    cout << "Hexadecimal: " << hex << endl;
+
+
+    return 0;
+}
